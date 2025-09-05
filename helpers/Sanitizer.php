@@ -1,0 +1,86 @@
+<?php
+class Sanitizer {
+
+    public static function string($value): ?string {
+        $cleanValue = trim(filter_var((string)$value, FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+        
+        if($cleanValue !== '') {
+            return $cleanValue;
+        } else {
+            return null;
+        }       
+    }
+
+    public static function integer($value): ?int {
+        $cleanValue = filter_var($value, FILTER_VALIDATE_INT);
+
+        if($cleanValue !== false) {
+            return $cleanValue;
+        } else {
+            return null;
+        }
+    }
+
+    public static function float($value): ?float {
+        $cleanValue = filter_var($value, FILTER_VALIDATE_FLOAT);
+
+        if($cleanValue !== false) {
+            return $cleanValue;
+        } else {
+            return null;
+        }
+    }
+
+    public static function email($value): ?string {
+        $cleanValue = filter_var((string)$value, FILTER_SANITIZE_EMAIL);
+
+        if($cleanValue !== false) {
+            return $cleanValue;
+        } else {
+            return null;
+        }
+    }
+
+    public static function array($value): ?array {
+        
+        if(is_array($value) && !empty($value)) {
+            return $value;
+        } else {
+            return null;
+        }
+    }
+
+    public static function date($value, $format = 'Y-m-d'): ?string {
+        $date = DateTime::createFromFormat($format, $value);
+
+        if($date && $date->format($format) === $value) {
+            return $date;
+        } else {
+            return null;
+        }
+    }
+
+    public static function phone($value): ?string {
+        $value = preg_replace('/\D/', '', $value); // mantém só números
+        
+        if(strlen($value) >= 10 && strlen($value) <= 11) {
+            return $value;
+        } else {
+            return null;
+        }
+    }
+
+    public static function validatePasswordStrong($password, $minLength = 8): ?string {
+        if( 
+            strlen($password) >= $minLength &&
+            preg_match('/[A-Z]/', $password) &&    // pelo menos 1 maiúscula
+            preg_match('/[a-z]/', $password) &&    // pelo menos 1 minúscula
+            preg_match('/[0-9]/', $password) &&    // pelo menos 1 número
+            preg_match('/[\W_]/', $password) )     // pelo menos 1 caracter especial
+        {
+            return $password;
+        } else {
+            return null;
+        }
+    }
+}
