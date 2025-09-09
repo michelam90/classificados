@@ -1,5 +1,5 @@
 <?php
-require '../../config.php';
+require '../../config/config.php';
 require '../../helpers/ValidateImages.php';
 require '../../classes/Ad.php';
 require '../../helpers/CsrfValidator.php';

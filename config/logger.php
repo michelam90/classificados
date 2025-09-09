@@ -1,6 +1,6 @@
 <?php
 // logger.php
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
@@ -12,7 +12,7 @@ define('APP_ENV', 'dev'); // 'dev' ou 'prod'
 $logger = new Logger('system');
 
 // Define o destino do log (pasta logs/system.log)
-$logPath = __DIR__ . '/logs/system.log';
+$logPath = __DIR__ . '/../logs/system.log';
 
 // Rotaciona diariamente, mantém últimos 30 arquivos
 $logger->pushHandler(new RotatingFileHandler($logPath, 30, Logger::DEBUG));

@@ -3,10 +3,6 @@ session_start();
 
 define('BASE_URL', 'http://localhost/classificados/');
 
-// Classes de validação e notificação
-require 'helpers/Sanitizer.php';
-require 'helpers/MessagesSystem.php';
-
 
 // páginas públicas
 $publicPages = [
@@ -34,17 +30,22 @@ if (!in_array($currentPage, $publicPages) && empty($_SESSION['token'])) {
     exit;
 }
 
+// Carrega o logger para usar em todo o sistema
+$logger = require __DIR__ . '/logger.php';
+
+// Classes de validação e notificação
+require __DIR__ . '/../helpers/Sanitizer.php';
+require __DIR__ . '/../helpers/MessagesSystem.php';
 
 // Arquivo com as configuração de acesso ao banco de dados
-require_once __DIR__ . '/env.php';
+require_once __DIR__ . '/connection.php';
 
-
-require_once 'classes/User.php';
+require_once __DIR__ . '/../classes/User.php';
 $user = new User($pdo);
 
-require 'classes/Auth.php';
+require __DIR__ . '/../classes/Auth.php';
 $auth = new Auth($pdo, BASE_URL);
-require 'classes/LogSystem.php';
+require __DIR__ . '/../classes/LogSystem.php';
 $logAction = new LogSystem($pdo);
 
 $userInfo = $auth->checkToken();
@@ -52,5 +53,4 @@ if(!$userInfo) {
     $userInfo['id'] = 0;
 }
 
-// Carrega o logger para usar em todo o sistema
-$logger = require __DIR__ . '/logger.php';
+

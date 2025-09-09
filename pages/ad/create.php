@@ -27,7 +27,7 @@ $csrfToken = CsrfValidator::generateToken();
         <div class="form-floating mb-3">
             <select name="category" id="category" class="form-select" required>
                 <?php foreach($categories->getAll() as $item): ?>
-                    <option value="<?= $item['id']; ?>"><?= $item['nome']; ?></option>
+                    <option value="<?= Sanitizer::safeOutput($item['id']); ?>"><?= Sanitizer::safeOutput($item['nome']); ?></option>
                 <?php endforeach; ?>
             </select>
             <label for="floatingInput">Categoria</label>

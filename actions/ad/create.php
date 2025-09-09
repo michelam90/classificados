@@ -1,5 +1,5 @@
 <?php 
-require '../../config.php';
+require '../../config/config.php';
 require '../../classes/Ad.php';
 require '../../helpers/CsrfValidator.php';
 $ads = new Ad($pdo);

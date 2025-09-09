@@ -36,32 +36,32 @@ $adData = $ad->getFullAd($id_anuncio);
     <br/>
     <form method="POST" action="actions/ad/edit.php" enctype="multipart/form-data">
         
-        <input type="hidden" name="id_anuncio" value="<?=$id_anuncio;?>">
-        <input type="hidden" name="csrf_token" value="<?=$csrfToken;?>">
+        <input type="hidden" name="id_anuncio" value="<?= htmlspecialchars($id_anuncio);?>">
+        <input type="hidden" name="csrf_token" value="<?=Sanitizer::safeOutput($csrfToken);?>">
         
         <div class="form-floating mb-3">
             
             <select name="category" id="category" class="form-control">
                 <?php foreach($categories->getAll() as $item): ?>
-                    <option value="<?= $item['id']; ?>" <?= ($adData['id_categoria'] == $item['id']) ? 'selected="selected"' : ''; ?>> <?= $item['nome']; ?> </option>
+                    <option value="<?= Sanitizer::safeOutput($item['id']); ?>" <?= ($adData['id_categoria'] == $item['id']) ? 'selected="selected"' : ''; ?>> <?= Sanitizer::safeOutput($item['nome']); ?> </option>
                 <?php endforeach; ?>
             </select>
             <label for="floatingInput">Categoria</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="title" id="title" class="form-control" value="<?= $adData['titulo']; ?>">            
+            <input type="text" class="form-control" name="title" id="title" class="form-control" value="<?= Sanitizer::safeOutput($adData['titulo']); ?>">            
             <label for="floatingInput">Titulo</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="price" id="price" class="form-control" value="<?= $adData['valor']; ?>">            
+            <input type="text" class="form-control" name="price" id="price" class="form-control" value="<?= htmlspecialchars($adData['valor']); ?>">            
             <label for="floatingInput">Preço</label>
         </div>
        
 
         <div class="form-floating mb-3">
-            <textarea name="description" class="form-control" style="height: 100px;"><?= $adData['descricao']; ?></textarea> 
+            <textarea name="description" class="form-control" style="height: 100px;"><?= Sanitizer::safeOutput($adData['descricao']); ?></textarea> 
             <label for="floatingInput">Descrição</label>      
         </div>
 
@@ -89,8 +89,8 @@ $adData = $ad->getFullAd($id_anuncio);
                 <div class="card-body">
                     <?php foreach($adData['fotos'] as $foto): ?>
                     <div class="foto_item">
-                        <img src="assets/images/anuncios/<?= $foto['url']; ?>" class="img-thumbnail" border="0" /><br/>
-                        <a href="actions/ad/delete-photo.php?id=<?= $foto['id']; ?>&id_anuncio=<?= $id_anuncio; ?>" class="btn btn-light">Excluir Imagem </a>
+                        <img src="assets/images/anuncios/<?= Sanitizer::safeOutput($foto['url']); ?>" class="img-thumbnail" border="0" /><br/>
+                        <a href="actions/ad/delete-photo.php?id=<?= htmlspecialchars($foto['id']); ?>&id_anuncio=<?= htmlspecialchars($id_anuncio); ?>" class="btn btn-light">Excluir Imagem </a>
                     </div>
                     <?php endforeach; ?>
                 </div><br/>

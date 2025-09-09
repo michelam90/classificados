@@ -1,7 +1,7 @@
 <?php 
 define('ACESSO_VALIDO', true);
 
-require 'config.php';      
+require 'config/config.php';      
 require 'classes/Ad.php';
 require 'classes/AdCategory.php';
 require 'helpers/CsrfValidator.php';

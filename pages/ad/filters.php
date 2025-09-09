@@ -10,7 +10,7 @@ PageAccessValidate::checkPageAccess();
             <select name="filters[category]" id="category" class="form-select">
                 <option value="0">Selecione uma categoria</option>
                 <?php foreach($categories->getAll() as $item): ?>
-                    <option value="<?= $item['id']; ?>" <?= ($filters['category'] == $item['id']) ? 'selected="selected"' : ''; ?>><?= $item['nome']; ?></option>
+                    <option value="<?= Sanitizer::safeOutput($item['id']); ?>" <?= ($filters['category'] == $item['id']) ? 'selected="selected"' : ''; ?>><?= Sanitizer::safeOutput($item['nome']); ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

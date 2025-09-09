@@ -48,16 +48,16 @@ $ultimosAnuncios = $ad->getLastAds($currentPage, $perPage, $filters);
                         <tr>
                             <td>
                             <?php if(!empty($item['url'])): ?>
-                                <img src="assets/images/anuncios/<?=$item['url'];?>" height="50" border="0" />
+                                <img src="assets/images/anuncios/<?=Sanitizer::safeOutput($item['url']);?>" height="50" border="0" />
                             <?php else: ?>
                                 <img src="assets/images/anuncios/default.png" height="50" border="0" />
                             <?php endif; ?>
                             </td>
                             <td>
-                                <a href="index.php?page=ad-product&id=<?= $item['id']; ?>"> <?= $item['titulo']; ?> </a><br/>
+                                <a href="index.php?page=ad-product&id=<?= Sanitizer::safeOutput($item['id']); ?>"> <?= Sanitizer::safeOutput($item['titulo']); ?> </a><br/>
                                 <?= $item['categoria']; ?>
                             </td>
-                            <td>R$ <?= number_format($item['valor'], 2); ?></td>
+                            <td>R$ <?= htmlspecialchars(number_format($item['valor'], 2)); ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>

@@ -20,12 +20,12 @@ $adData = $ad->getFullAd($id);
                 <?php require 'pages/ad/carousel.php'; ?>
             </div>
             <div class="col-sm-7"> 
-                <h1><?= $adData['titulo']; ?></h1>
-                <h4><?= $adData['categoria']; ?></h4>
-                <p><?= $adData['descricao']; ?></p>
+                <h1><?= Sanitizer::safeOutput($adData['titulo']); ?></h1>
+                <h4><?= Sanitizer::safeOutput($adData['categoria']); ?></h4>
+                <p><?= Sanitizer::safeOutput($adData['descricao']); ?></p>
                 <br/>
-                <h3>R$ <?= number_format($adData['valor'], 2); ?></h3>
-                <h4>Telefone para contato: <?= $adData['telefone']; ?></h4>
+                <h3>R$ <?= htmlspecialchars(number_format($adData['valor'], 2)); ?></h3>
+                <h4>Telefone para contato: <?= Sanitizer::safeOutput($adData['telefone']); ?></h4>
             </div>
         </div>
             

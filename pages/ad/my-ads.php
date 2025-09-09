@@ -34,15 +34,24 @@ PageAccessValidate::checkPageAccess();
         ?>
             <tr>
                 <?php if(!empty($item['url'])): ?>
-                    <td><img src="assets/images/anuncios/<?=$item['url'];?>" height="50" border="0" /></td>
+                    <td><img src="assets/images/anuncios/<?=Sanitizer::safeOutput($item['url']);?>" height="50" border="0" /></td>
                 <?php else: ?>
                     <td><img src="assets/images/anuncios/default.png" height="50" border="0" /></td>
                 <?php endif; ?>
-                <td><?= $item['titulo']; ?></td>
-                <td>R$ <?= number_format($item['valor'], 2); ?></td>
+                <td><?= Sanitizer::safeOutput($item['titulo']); ?></td>
+                <td>R$ <?= htmlspecialchars(number_format($item['valor'], 2)); ?></td>
                 <td>
-                    <a href="index.php?page=ad-edit&id=<?=$item['id'];?>" class="btn btn-warning"> Editar</a>
-                    <a href="actions/ad/delete-ad.php?id=<?=$item['id'];?>" class="btn btn-danger"> Excluir</a>
+                    <a href="index.php?page=ad-edit&id=<?=Sanitizer::safeOutput($item['id']);?>" class="btn btn-warning"> Editar</a>
+                    <button type="button" 
+                            class="btn btn-danger"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#confirmDeleteModal"
+                            data-id="<?= Sanitizer::safeOutput($item['id']); ?>"
+                            data-nome="<?= Sanitizer::safeOutput($item['titulo']); ?>"
+                            data-action="actions/ad/delete-ad.php"                            
+                           >
+                        Excluir
+                    </button>
                 </td>
             </tr>
         <?php 
@@ -51,6 +60,3 @@ PageAccessValidate::checkPageAccess();
     </table>
 
 </div>
-<?php
-require 'pages/footer.php';
-?>

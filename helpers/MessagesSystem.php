@@ -15,8 +15,8 @@ class MessagesSystem {
             'update_success' => "Atualização realizada com sucesso!",
             'create_fail'    => "Não foi possível realizar o cadastro.",
             'update_fail'    => "Não foi possível realizar a atualização.",
-            'delete_success' => "Registro excluído com sucesso!",
-            'delete_fail'    => "Não foi possível excluir. ".$field,
+            'delete_success' => "Registro excluído com sucesso. <b>$field</b>",
+            'delete_fail'    => "Não foi possível excluir. <b>$field</b>",
             'already_exists' => "Cadastro já existe.",
             'login'          => "Faça login"
         ];

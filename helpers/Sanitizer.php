@@ -83,4 +83,23 @@ class Sanitizer {
             return null;
         }
     }
+
+    public static function safeOutput(string $text): string {
+        // Detecta a codificação original
+        $encoding = mb_detect_encoding($text, ['UTF-8', 'ISO-8859-1', 'Windows-1252'], true);
+        if ($encoding === false) {
+            $encoding = 'UTF-8';
+        }
+
+        // Garante UTF-8
+        $utf8 = mb_convert_encoding($text, 'UTF-8', $encoding);
+
+        // Decodifica entidades existentes (&eacute; -> é)
+        $decoded = html_entity_decode($utf8, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        // Escapa novamente de forma limpa
+        return htmlspecialchars($decoded, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    }
+
+
 }

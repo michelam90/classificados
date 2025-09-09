@@ -8,7 +8,7 @@ PageAccessValidate::checkPageAccess();
     <?php foreach($adData['fotos'] as $key => $image) : ?>
         
         <div class="carousel-item <?= ($key==1) ? 'active' : ''; ?>" data-bs-interval="2000">
-            <img src="assets/images/anuncios/<?=$image['url'];?>" class="d-block w-100" alt="..." style="max-width: 800px; max-height: 480px;">
+            <img src="assets/images/anuncios/<?=Sanitizer::safeOutput($image['url']);?>" class="d-block w-100" alt="..." style="max-width: 800px; max-height: 480px;">
         </div>
         
     <?php endforeach; ?>
