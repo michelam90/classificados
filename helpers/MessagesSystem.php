@@ -1,46 +1,69 @@
 <?php
 class MessagesSystem {
-    public static function message($type, $field ='', $extra=''): string {
-        
+    public static function message(string $type, string $context = ''): string {
         $messages = [
-            // Validações de formulário
-            'required'  => "O campo <b>{$field}</b> é obrigatório.",
-            'invalid'   => "O campo <b>{$field}</b> é inválido. ".$extra,
-            'minlength' => "O campo <b>{$field}</b> ultrapassou tamanho máximo.",
-            'format'    => "O campo <b>{$field}</b> possui formato incorreto.",
-            'denied'   => "Requisição inválida. ".$field,
+            // Sistema
+            'denied_method' => "Requisição inválida. Método não permitido.",
+            'denied_csrf'   => "Requisição negada por falha de segurança (CSRF).",
 
-            // Operações de cadastro/atualização
+            // Formulário
+            'required'      => "O campo <b>{$context}</b> é obrigatório.",
+            'invalid'       => "O campo <b>{$context}</b> é inválido.",
+            'minlength'     => "O campo <b>{$context}</b> ultrapassou tamanho máximo.",
+            'format'        => "O campo <b>{$context}</b> possui formato incorreto.",
+
+            // Upload
+            'upload_size'   => "O arquivo <b>{$context}</b> excede o limite permitido de 2MB.",
+            'upload_type'   => "O arquivo <b>{$context}</b> possui tipo não permitido (somente JPEG e PNG).",
+
+            // CRUD
             'create_success' => "Cadastro realizado com sucesso!",
             'update_success' => "Atualização realizada com sucesso!",
             'create_fail'    => "Não foi possível realizar o cadastro.",
             'update_fail'    => "Não foi possível realizar a atualização.",
-            'delete_success' => "Registro excluído com sucesso. <b>$field</b>",
-            'delete_fail'    => "Não foi possível excluir. <b>$field</b>",
-            'already_exists' => "Cadastro já existe.",
-            'login'          => "Faça login"
         ];
 
-        if($type == 'required' || $type == 'format' || $type == 'minlength' || $type == 'invalid') {
-            $alert = 'warning';
-        } elseif($type == 'create_fail' || $type == 'update_fail' || $type == 'delete_fail' || $type == 'denied' || $type == 'already_exists') {
-            $alert = 'danger';
-        } elseif($type == 'create_success' || $type == 'update_success' || $type == 'delete_success' || $type == 'login') {
-            $alert = 'success';
-        }
+       
+        $alert = self::typeAlert($type);
 
 
-        $message = '<div class="alert alert-'.$alert.' alert-dismissible fade show" role="alert">
-                             '.$messages[$type].'
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>';
+        $messageText = $messages[$type] ?? "Erro desconhecido: {$type}";
 
-        return $message;
+        return <<<HTML
+        <div class="alert alert-{$alert} alert-dismissible fade show" role="alert">
+            {$messageText}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        HTML;
     }
+
+    private static function typeAlert(string $type): string {
+
+        if (
+            strpos($type, 'create_') === 0 ||
+            strpos($type, 'update_') === 0 ||
+            strpos($type, 'delete_') === 0 ||
+            $type === 'login'
+        ) {
+
+            $alert = 'success';
+
+        } elseif (
+            strpos($type, 'denied') === 0 ||
+            strpos($type, 'upload_') === 0
+        ) {
+
+            $alert = 'danger';
+
+        } else {
+
+            $alert = 'warning';
+
+        }
+        
+        return $alert;
+
+    }
+
 }
-/*
-Ex:
-echo vadation('required', 'E-mail'); // O campo E-mail é obrigatório.
 
-
-*/

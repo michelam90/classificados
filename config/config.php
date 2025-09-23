@@ -1,5 +1,8 @@
 <?php 
+// Sessão: Secure/HttpOnly/SameSite/rotação pós-login.
+session_set_cookie_params(['secure'=>true,'httponly'=>true,'samesite'=>'Strict']);
 session_start();
+session_regenerate_id(true);
 
 define('BASE_URL', 'http://localhost/classificados/');
 
@@ -34,7 +37,9 @@ if (!in_array($currentPage, $publicPages) && empty($_SESSION['token'])) {
 $logger = require __DIR__ . '/logger.php';
 
 // Classes de validação e notificação
+require __DIR__ . '/../helpers/Redirect.php';
 require __DIR__ . '/../helpers/Sanitizer.php';
+require __DIR__ . '/../helpers/Validator.php';
 require __DIR__ . '/../helpers/MessagesSystem.php';
 
 // Arquivo com as configuração de acesso ao banco de dados

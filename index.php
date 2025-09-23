@@ -1,4 +1,7 @@
 <?php 
+// função para declarar erros de tipo no código
+declare(strict_types=1);
+
 define('ACESSO_VALIDO', true);
 
 require 'config/config.php';      
