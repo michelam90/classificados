@@ -25,7 +25,7 @@ $adData = $ad->getFullAd($id);
                 <p><?= Sanitizer::safeOutput($adData['descricao']); ?></p>
                 <br/>
                 <h3>R$ <?= htmlspecialchars(number_format($adData['valor'], 2)); ?></h3>
-                <h4>Telefone para contato: <?= Sanitizer::safeOutput($adData['telefone']); ?></h4>
+                <h4>Telefone para contato: <?= htmlspecialchars($adData['telefone'] ?? ''); ?></h4>
             </div>
         </div>
             

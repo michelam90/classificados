@@ -1,16 +1,16 @@
 <?php
 
-// Carrega as variáveis
-loadEnv(__DIR__ . '/.env'); // ajusta o caminho pro seu projeto
+// Pegando os dados de acesso
+$ini = parse_ini_file('bd.ini');
 
-$host = getenv('DB_HOST');
-$db   = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASS');
+$host = $ini['host'];
+$name = $ini['name'];
+$user = $ini['user'];
+$pass = $ini['pass'];
 if ($pass === false) $pass = ''; // força string vazia se não encontrar
 
 try {
-    $pdo = new PDO("mysql:dbname=$db;host=$host", $user, $pass, [
+    $pdo = new PDO("mysql:dbname=$name;host=$host", $user, $pass, [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Erros como exceção
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]);

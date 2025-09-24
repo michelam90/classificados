@@ -18,7 +18,7 @@ class Auth {
                    
             $user = $this->user->findByToken($token);
 
-            if($user) { // Verificar se o o token do usuário foi encontrado                
+            if($user) { // Verificar se o token do usuário foi encontrado                
                 return $user;
             } else {
                 unset($_SESSION['token']);
@@ -32,9 +32,9 @@ class Auth {
 
         $user = $this->user->findbyEmail($email);
         if( !empty($user) ) {
-               
+                             
             if( password_verify($password, $user['senha']) ) {
-               
+                
                 // Gerando novo token
                 $token = md5(time().rand(0,9999));
                 // Passa o token para sessão
